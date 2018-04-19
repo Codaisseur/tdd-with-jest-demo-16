@@ -15,20 +15,16 @@ let sockets = []
 const processItem = item => {
   if (!isInterestingItem(item, TOPIC)) return
 
-  sockets.forEach(socket => {
-    socket.emit('action', {
-      type: 'NEW_RSVP',
-      payload: item
-    });
+  io.emit('action', {
+    type: 'NEW_RSVP',
+    payload: item
   });
 
   topicsCounter = updateCounters(topicsCounter, item)
 
-  sockets.forEach(socket => {
-    socket.emit('action', {
-      type: 'UPDATE_TOP_10',
-      payload: top10(topicsCounter)
-    });
+  io.emit('action', {
+    type: 'UPDATE_TOP_10',
+    payload: top10(topicsCounter)
   });
 }
 
@@ -42,6 +38,10 @@ mup.stream("/2/rsvps", stream => {
 
 io.on('connection', socket => {
   console.log('got connection')
+  socket.emit('action', {
+    type: 'UPDATE_TOP_10',
+    payload: top10(topicsCounter)
+  });
   sockets.push(socket)
 });
 
