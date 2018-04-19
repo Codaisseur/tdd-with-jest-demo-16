@@ -4,9 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node .",
+    "listen": "node listener/",
     "test": "jest --notify --watchAll"
   },
   "devDependencies": {
-    "jest": "^22.4.3"
+    "jest": "^22.4.3",
+    "socket.io-client": "^2.1.0"
+  },
+  "dependencies": {
+    "express": "^4.16.3",
+    "meetup": "^0.1.0-SNAPSHOT",
+    "socket.io": "^2.1.0"
   }
 }
